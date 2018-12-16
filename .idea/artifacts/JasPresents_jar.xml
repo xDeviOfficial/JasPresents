@@ -1,0 +1,9 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="JasPresents:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/JasPresents_jar</output-path>
+    <root id="archive" name="JasPresents.jar">
+      <element id="module-output" name="JasPresents" />
+      <element id="library" level="project" name="Maven: com.zaxxer:HikariCP:3.1.0" />
+    </root>
+  </artifact>
+</component>

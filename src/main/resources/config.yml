@@ -1,0 +1,20 @@
+#
+# Global Config
+#
+General:
+  DebugMode: true
+  Database:
+    #If you will turn this off database will turn off and a lot of functions will doesn't work!
+    DatabaseUse: true
+    #Do not edit if you doesn't know what's this, default should work fine
+    DataSourceClass: "com.mysql.jdbc.jdbc2.optional.MysqlDataSource"
+    #Server ip, default localhost, you propably don't have to edit that
+    ServerIP: "127.0.0.1"
+    #Default port its fine, if you changed it, you need to do this there too
+    ServerPort: "3306"
+    #DB name, be sure that other DB with that name doesn't exists
+    DatabaseName: "AzenisBans"
+    #User, propably by default root, but for safety you should create own user with privilages for that database
+    DatabaseUser: "root"
+    #Password for your user, be sure that you have allowed remote connections if database is isn't on localhost
+    DatabasePassword: "passwd"
