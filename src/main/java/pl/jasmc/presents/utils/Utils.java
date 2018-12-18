@@ -156,7 +156,6 @@ public class Utils {
             }
         }
 
-        // Search in parent classes
         if (target.getSuperclass() != null)
             return getField(target.getSuperclass(), name, fieldType, index);
         throw new IllegalArgumentException("Cannot find field with type " + fieldType);

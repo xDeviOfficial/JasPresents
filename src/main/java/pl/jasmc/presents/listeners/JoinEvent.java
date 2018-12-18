@@ -5,8 +5,6 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.AsyncPlayerPreLoginEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import pl.jasmc.presents.database.DatabaseConfiguration;
-import pl.jasmc.presents.managers.DataManager;
-import pl.jasmc.presents.objects.JPlayer;
 
 
 public class JoinEvent implements Listener {

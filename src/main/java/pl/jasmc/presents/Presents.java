@@ -9,6 +9,7 @@ import com.comphenix.protocol.wrappers.nbt.NbtFactory;
 import com.mojang.authlib.GameProfile;
 import com.mojang.authlib.properties.Property;
 import com.zaxxer.hikari.HikariDataSource;
+import net.milkbowl.vault.economy.Economy;
 import net.minecraft.server.v1_12_R1.*;
 import org.apache.commons.codec.binary.Base64;
 import org.bukkit.Bukkit;
@@ -20,30 +21,28 @@ import org.bukkit.craftbukkit.v1_12_R1.inventory.CraftItemStack;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.PluginManager;
+import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
-import org.yaml.snakeyaml.external.biz.base64Coder.Base64Coder;
 import pl.jasmc.presents.commands.PresentCommand;
 import pl.jasmc.presents.database.DatabaseConfiguration;
-import pl.jasmc.presents.inventory.PresentInventory;
 import pl.jasmc.presents.listeners.*;
 import pl.jasmc.presents.managers.DataManager;
 import pl.jasmc.presents.objects.JPlayer;
-import pl.jasmc.presents.objects.Present;
-import pl.jasmc.presents.packets.WrapperPlayServerTileEntityData;
 import pl.jasmc.presents.utils.RandomFireWorks;
 import pl.jasmc.presents.utils.Utils;
 import org.bukkit.Location;
 
-import java.lang.reflect.Field;
-import java.lang.reflect.InvocationTargetException;
 import java.sql.SQLException;
-import java.util.Arrays;
-import java.util.UUID;
 
 public class Presents extends JavaPlugin {
 
     private static Presents inst;
     private HikariDataSource hikari;
+    private static Economy econ = null;
+
+    public static Economy getEcon() {
+        return econ;
+    }
 
     private ProtocolManager protocolManager;
 
@@ -78,7 +77,6 @@ public class Presents extends JavaPlugin {
         pm.registerEvents(new QuitListener(), this);
         pm.registerEvents(new PlayerInteractListener(), this);
         pm.registerEvents(new InventoryInteractListener(), this);
-        //this.registerPacketIntercepter();
 
 
 
@@ -90,7 +88,7 @@ public class Presents extends JavaPlugin {
                    Utils.sendColoredInfo("&cDatabase status = &aON");
                     try {
                         DatabaseConfiguration.checkTable();
-                        DatabaseConfiguration.loadPresents();
+                       // DatabaseConfiguration.loadPresents();
                         startPacketTask();
                     } catch (SQLException e) {
                         e.printStackTrace();
@@ -104,6 +102,8 @@ public class Presents extends JavaPlugin {
 
         RandomFireWorks.getManager().addColors();
         RandomFireWorks.getManager().addTypes();
+        registerPacketIntercepter();
+        setupEconomy();
 
 
 
@@ -116,25 +116,25 @@ public class Presents extends JavaPlugin {
         }
     }
 
+    private boolean setupEconomy() {
+        if (getServer().getPluginManager().getPlugin("Vault") == null) {
+            return false;
+        }
+        RegisteredServiceProvider<Economy> rsp = getServer().getServicesManager().getRegistration(Economy.class);
+        if (rsp == null) {
+            return false;
+        }
+        econ = rsp.getProvider();
+        return econ != null;
+    }
+
     public void startPacketTask() {
         Bukkit.getScheduler().runTaskTimerAsynchronously(this, new Runnable() {
             @Override
             public void run() {
-                if(DataManager.players.size() >= 1) {
-                    for(JPlayer j : DataManager.players) {
-                        for(Present p : j.presentsToFind) {
-                            if(p.getLocation() != null) {
-                                if(j.getPresentsFound().contains(p)) {
-                                    placeSkull(Bukkit.getPlayer(j.name), p.getLocation(), "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvMjc1ZDEzY2ExNGJjYmJkMWNkZTIxYWEwNjYwMDEwMWU0NTZkMzE4YWFkZjE3OGIyNzkzNjc4YjQ5NGY2ZGNlOCJ9fX0=");
-                                } else {
-                                    placeSkull(Bukkit.getPlayer(j.name), p.getLocation(), p.getTextureID());
-                                }
-
-                            }
-                        }
-                    }
+                for(JPlayer player : DataManager.players) {
+                    player.updatePresents();
                 }
-
             }
         }, 0, 10);
 

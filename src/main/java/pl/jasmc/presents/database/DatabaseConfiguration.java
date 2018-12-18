@@ -12,7 +12,6 @@ import pl.jasmc.presents.utils.ThreadPool;
 import pl.jasmc.presents.utils.Utils;
 
 import java.sql.*;
-import java.util.List;
 
 public class DatabaseConfiguration {
 
@@ -27,44 +26,92 @@ public class DatabaseConfiguration {
 
     }
 
+    /*
+        loadPlayer()
+        @p = Gracz
+        Ladowanie gracza
+     */
+
     public static void loadPlayer(Player player)  {
         JPlayer jPlayer = new JPlayer(player.getUniqueId().toString(), player.getName());
+        loadPresentsToFind(jPlayer);
+        loadPresentFound(jPlayer);
         DataManager.players.add(jPlayer);
-        String query = "SELECT * FROM JasPresentsUsers WHERE username=\"" + player.getName() + "\"";
-        try  {
-            ResultSet resultSet = stm.executeQuery(query);
-            if(resultSet.isClosed()) {
-                System.out.println("Cannot load player " + player.getName() + ", ResultSet closed");
-                return;
-            }
-            while(resultSet.next()) {
 
-                Present present = DataManager.getPresentByLocation(new Location(Bukkit.getWorld(resultSet.getString("world")), resultSet.getInt("x"), resultSet.getInt("y"), resultSet.getInt("z")));
-                if(alreadyFound(present)) {
+    }
 
-                    jPlayer.getPresentsFound().add(present);
-                } else {
-                    jPlayer.getPresentsToFind().add(present);
-                }
+        /*
+        loadTestPresentFound()
+        @p = JPlayer obiekt
+        Ladowanie znalezionych prezentow
+     */
 
+    public static void loadPresentFound(JPlayer player) {
+        String query = "SELECT * FROM JasPresents INNER JOIN JasPresentsUsers ON JasPresentsUsers.present_id = JasPresents.id WHERE JasPresentsUsers.username = \"" + player.getName() + "\" ";
+        try {
+            ResultSet rs = stm.executeQuery(query);
+            while(rs.next()) {
+                String presentName = rs.getString("present_name");
+                String presentType = rs.getString("present_type");
+                int presentID = rs.getInt("present_id");
+                String world = rs.getString("world");
+                int x = rs.getInt("x");
+                int y = rs.getInt("y");
+                int z = rs.getInt("z");
+                player.getPresentsFound().add(new Present(presentName, PresentType.valueOf(presentType.toUpperCase()), new Location(Bukkit.getWorld(world), x,y,z), presentID));
+                System.out.println("Dodano: " + player.getName() + " do znalezionych [" + presentName);
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
 
-    public static boolean alreadyFound(Present present) {
-        String query = "SELECT * FROM JasPresents WHERE id=\"" + present.getId() + "\"";
+         /*
+        loadTestPresentToFind()
+        @p = Gracz
+        Ladowanie prezentow do znalezienia
+     */
+
+    public static void loadPresentsToFind(JPlayer jPlayer) {
+        String query = "select * from JasPresents where (id) NOT IN (select present_id from JasPresentsUsers where username=\"" + jPlayer.getName() + "\");";
+        try {
+            ResultSet rs = stm.executeQuery(query);
+            while(rs.next()) {
+                        int id = rs.getInt("id");
+                        String location = rs.getString("location");
+                        String present_name = rs.getString("present_name");
+                        String present_type = rs.getString("present_type");
+                        jPlayer.getPresentsToFind().add(new Present(present_name, PresentType.valueOf(present_type.toUpperCase()), Utils.stringToLoc(location), id));
+                        System.out.println("Zaladowano prezent do znalezienia dla gracza: " + jPlayer.getName());
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+
+    /*
+        SPRAWDZANIE CZY ZNALAZL PREZENT
+     */
+
+
+    public static boolean alreadyFound(Present present, String player) {
+        String query = "SELECT * FROM JasPresentsUsers WHERE username=\"" + player + "\"";
         try (ResultSet rs = stm.executeQuery(query)) {
-            if(rs.next()) {
-                boolean alreadyFound =  present.getId() == rs.getInt("id");
-                return alreadyFound;
+            while(rs.next()) {
+                if(present.getId() == rs.getInt("present_id")) {
+                    return true;
+                }
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
         return false;
     }
+
+    /*
+        ZANALEZIENIE PREZENTU
+     */
 
 
     public static void foundPresent(String player, Present present) {
@@ -81,6 +128,10 @@ public class DatabaseConfiguration {
         });
     }
 
+    /*
+        Dodawanie prezentu do bazy
+     */
+
 
     public static void addPresent(String location, String name, String type) throws SQLException  {
         String query = "INSERT INTO JasPresents (location, present_name, present_type) VALUES (\"" +  location + "\",\"" + name + "\",\"" + type + "\")";
@@ -88,12 +139,15 @@ public class DatabaseConfiguration {
         stm.executeUpdate(query);
     }
 
+    /*
 
+        DEBUGOWANIE
+
+     */
     public static void loadPresents() throws SQLException {
         ResultSet rs = stm.executeQuery("SELECT * FROM JasPresents");
         int i = 0;
         while(rs.next()) {
-
             Present present = new Present(rs.getString("present_name"), PresentType.valueOf(rs.getString("present_type").toUpperCase()), Utils.stringToLoc(rs.getString("location")), rs.getInt("id"));
             DataManager.addPresent(present);
             i++;

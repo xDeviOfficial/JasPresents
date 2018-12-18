@@ -5,13 +5,9 @@ import com.comphenix.protocol.PacketType;
 import com.comphenix.protocol.events.ListenerPriority;
 import com.comphenix.protocol.events.PacketAdapter;
 import com.comphenix.protocol.events.PacketEvent;
-import org.bukkit.entity.Player;
+import com.comphenix.protocol.wrappers.WrappedBlockData;
+import org.bukkit.Material;
 import org.bukkit.plugin.java.JavaPlugin;
-
-import org.bukkit.Location;
-import pl.jasmc.presents.managers.DataManager;
-import pl.jasmc.presents.objects.Present;
-import pl.jasmc.presents.packets.WrapperPlayServerBlockChange;
 
 public class InteractPacketListener extends PacketAdapter {
 
@@ -29,30 +25,12 @@ public class InteractPacketListener extends PacketAdapter {
         if (event.isCancelled()) {
             return;
         }
-
         if (event.getPacketType() == PacketType.Play.Server.BLOCK_CHANGE) {
-            WrapperPlayServerBlockChange wrapper = new WrapperPlayServerBlockChange(event.getPacket());
-            Location blockLocation = wrapper.getLocation(event);
-
-            if (hasBeenFaked(event.getPlayer(), blockLocation)) {
-                //wrapper.setBlockType(Material.AIR);
-                //wrapper.setBlockMetadata((byte) 0);
-
-                System.out.println("PACKET INTERCEPTED");
-                event.setCancelled(true);
+            for(WrappedBlockData data : event.getPacket().getBlockData().getValues()) {
+                if(data.getType().equals(Material.AIR)) {
+                    event.setCancelled(true);
+                }
             }
         }
-    }
-
-    /*
-     * A helper method to determine if a block at a location has been faked
-     */
-    private boolean hasBeenFaked(Player player, Location location) {
-        for(Present p : DataManager.loadedPresenents) {
-            if(location.equals(p.getLocation())) {
-                return true;
-            }
-        }
-        return false; // Implementation needed
     }
 }

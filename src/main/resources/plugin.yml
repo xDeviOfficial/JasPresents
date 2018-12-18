@@ -3,6 +3,7 @@ version: ${project.version}
 main: pl.jasmc.presents.Presents
 authors: [xDevi]
 description: Event na lobb dla Graczy, znajdowanie ukrytych prezentów
-depend: [ProtocolLib]
+loadbefore: [Vault]
+depend: [Vault,ProtocolLib]
 commands:
   prezent:

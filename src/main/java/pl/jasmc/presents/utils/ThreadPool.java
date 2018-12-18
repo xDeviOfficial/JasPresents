@@ -13,11 +13,3 @@ public class ThreadPool {
         pool.submit(run);
     }
 }
-
-//ASYNC POBIERANIE:
-/*
-
-ThreadPool.runTaskAsync
-
-
- */
