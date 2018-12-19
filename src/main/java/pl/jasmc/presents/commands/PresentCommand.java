@@ -34,7 +34,7 @@ public class PresentCommand implements CommandExecutor {
                     } else if(args.length == 3 && args[0].equalsIgnoreCase("dodaj")) {
                         String presentName = args[1];
                         String presentType = args[2];
-                        String location = Utils.locationToString(p.getLocation().add(0,1,0));
+                        String location = Utils.locationToString(p.getLocation().add(0,0.01,0));
                         if(!containsEnum(presentType.toUpperCase())) {
                             p.sendMessage(Utils.color("Wystapil blad, nie podano prawidlowego typu, uzyj /prezent typy aby uzyskac liste typow"));
                             return false;

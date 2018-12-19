@@ -119,7 +119,7 @@ public class Utils {
     }
 
     public static String locationToString(Location location) {
-        return location.getWorld().getName() + "/" + location.getX() + "/" + location.getY() + "/" + location.getZ();
+        return location.getWorld().getName() + "/" + location.getBlockX() + "/" + location.getBlockY() + "/" + location.getBlockZ();
     }
 
 
