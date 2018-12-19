@@ -22,7 +22,7 @@ public class PresentCommand implements CommandExecutor {
         if(command.getName().equalsIgnoreCase("prezent")) {
             if(sender instanceof Player) {
                 Player p = (Player) sender;
-                if(p.hasPermission("jasmc.admin")) {
+                if(p.hasPermission("group.developer") || p.hasPermission("group.admin") || p.hasPermission("group.minidev") || p.hasPermission("group.wlasciciel")) {
                     if(args.length == 0) {
                         p.sendMessage(Utils.color("&c&lWykryto uprawnienia Administratora"));
                         p.sendMessage(Utils.color("&d Prezenty &eJasMC"));
@@ -35,7 +35,7 @@ public class PresentCommand implements CommandExecutor {
                         String presentName = args[1];
                         String presentType = args[2];
                         String location = Utils.locationToString(p.getTargetBlock(null, 200).getLocation());
-                        if(!containsEnum(presentName.toUpperCase())) {
+                        if(!containsEnum(presentType.toUpperCase())) {
                             p.sendMessage(Utils.color("Wystapil blad, nie podano prawidlowego typu, uzyj /prezent typy aby uzyskac liste typow"));
                             return false;
                         }
