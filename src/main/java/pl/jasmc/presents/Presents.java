@@ -157,8 +157,8 @@ public class Presents extends JavaPlugin {
 
     public static void placeSkull(Player p, Location loc, String texture) {
         BlockPosition pos = new BlockPosition(loc.getX(), loc.getY(), loc.getZ());
-
         pos.down();
+        
 
         GameProfile gameProfile = Utils.getGameProfile(texture);
 
