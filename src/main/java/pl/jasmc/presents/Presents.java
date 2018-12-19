@@ -82,13 +82,12 @@ public class Presents extends JavaPlugin {
         pm.registerEvents(new InventoryInteractListener(), this);
 
 
-
         Bukkit.getScheduler().runTaskLater(this, new Runnable() {
             @Override
             public void run() {
                 Utils.sendColoredInfo("&cJas Presents have been enabled");
                 if (getConfig().getBoolean("General.Database.DatabaseUse")) {
-                   Utils.sendColoredInfo("&cDatabase status = &aON");
+                    Utils.sendColoredInfo("&cDatabase status = &aON");
                     try {
                         DatabaseConfiguration.checkTable();
                         DatabaseConfiguration.loadPresents();
@@ -136,7 +135,7 @@ public class Presents extends JavaPlugin {
         Bukkit.getScheduler().runTaskTimerAsynchronously(this, new Runnable() {
             @Override
             public void run() {
-                for(JPlayer player : DataManager.players) {
+                for (JPlayer player : DataManager.players) {
 
                     player.updatePresents();
                 }
@@ -157,8 +156,6 @@ public class Presents extends JavaPlugin {
      */
 
     public static void placeSkull(Player p, Location loc, String texture) {
-        loc.add(0, -0.49, 0);
-
         BlockPosition pos = new BlockPosition(loc.getX(), loc.getY(), loc.getZ());
 
         pos.down();
@@ -166,7 +163,6 @@ public class Presents extends JavaPlugin {
         GameProfile gameProfile = Utils.getGameProfile(texture);
 
         NBTTagCompound tag = CraftItemStack.asNMSCopy(Utils.createSkull(texture, "test")).getTag();
-
 
         TileEntitySkull skull = new TileEntitySkull();
 
@@ -177,8 +173,8 @@ public class Presents extends JavaPlugin {
         skull.save(tag);
 
 
-        ((CraftPlayer)p).sendBlockChange(loc, Material.SKULL, (byte) 3);
-        ((CraftPlayer)p).getHandle().playerConnection.sendPacket(skull.getUpdatePacket());
+        ((CraftPlayer) p).sendBlockChange(loc, Material.SKULL, (byte) 3);
+        ((CraftPlayer) p).getHandle().playerConnection.sendPacket(skull.getUpdatePacket());
     }
 
     private void registerPacketIntercepter() {
