@@ -160,8 +160,8 @@ public class Presents extends JavaPlugin {
         loc.add(0, -0.49, 0);
 
         BlockPosition pos = new BlockPosition(loc.getX(), loc.getY(), loc.getZ());
-
         pos.down();
+        
 
         GameProfile gameProfile = Utils.getGameProfile(texture);
 
