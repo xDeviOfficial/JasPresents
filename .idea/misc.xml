@@ -5,6 +5,7 @@
       <item index="0" class="java.lang.String" itemvalue="org.bukkit.event.EventHandler" />
     </list>
   </component>
+  <component name="IdProvider" IDEtalkID="AC58EAC1E13BA8A4FD3EE001B2D83C74" />
   <component name="MavenProjectsManager">
     <option name="originalFiles">
       <list>
@@ -12,7 +13,7 @@
       </list>
     </option>
   </component>
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_1_9" default="true" project-jdk-name="1.9" project-jdk-type="JavaSDK">
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_1_8" default="true" project-jdk-name="1.8" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/out" />
   </component>
 </project>
