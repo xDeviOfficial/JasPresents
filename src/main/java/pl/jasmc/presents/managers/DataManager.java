@@ -6,6 +6,7 @@ import pl.jasmc.presents.objects.JPlayer;
 import pl.jasmc.presents.objects.Present;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 
@@ -39,6 +40,25 @@ public class DataManager {
         for(Present present : loadedPresenents) {
             if(present.getLocation().equals(location)){
                 return present;
+            }
+        }
+        return null;
+    }
+
+    public static Present getSinglePresentByLocation(Location location, JPlayer player) {
+        Iterator itr = player.getPresentsFound().iterator();
+        if(itr.hasNext()) {
+            Present current = (Present) itr.next();
+            if(current.getLocation().equals(location)) {
+                return current;
+            }
+        }
+
+        Iterator itr2 = player.getPresentsToFind().iterator();
+        if(itr2.hasNext()) {
+            Present current = (Present) itr2.next();
+            if(current.getLocation().equals(location)) {
+                return current;
             }
         }
         return null;

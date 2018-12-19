@@ -4,11 +4,13 @@ import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
+import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import pl.jasmc.presents.Presents;
 import pl.jasmc.presents.database.DatabaseConfiguration;
 import pl.jasmc.presents.enums.PresentType;
 import pl.jasmc.presents.inventory.PresentInventory;
+import pl.jasmc.presents.managers.DataManager;
 import pl.jasmc.presents.utils.Utils;
 
 import java.sql.SQLException;
@@ -33,6 +35,10 @@ public class PresentCommand implements CommandExecutor {
                         String presentName = args[1];
                         String presentType = args[2];
                         String location = Utils.locationToString(p.getTargetBlock(null, 200).getLocation());
+                        if(!containsEnum(presentName.toUpperCase())) {
+                            p.sendMessage(Utils.color("Wystapil blad, nie podano prawidlowego typu, uzyj /prezent typy aby uzyskac liste typow"));
+                            return false;
+                        }
                         try {
                             DatabaseConfiguration.addPresent(location, presentName, presentType);
                             p.sendMessage(ChatColor.GREEN + "Dodano prezent pomyślnie: " + presentName + "Type=" + presentType);
@@ -47,9 +53,9 @@ public class PresentCommand implements CommandExecutor {
                             p.sendMessage(Utils.color("&bTyp: " + type.toString()));
                         }
                     } else if(args.length == 1 && args[0].equalsIgnoreCase("usun")) {
-                        String location = Utils.locationToString(p.getTargetBlock(null, 200).getLocation());
+                        Location location = p.getTargetBlock(null, 10).getLocation();
                         try {
-                            DatabaseConfiguration.deletePresent(location);
+                            DatabaseConfiguration.deletePresent(DataManager.getSinglePresentByLocation(p.getLocation(), DataManager.getJPlayer(p.getName())).getName());
                             p.sendMessage(Utils.color(Presents.TAG + "&ePomyslnie usuniteto prezent, prosze o przelogowanie!"));
                         } catch (SQLException e) {
                             e.printStackTrace();
@@ -70,6 +76,17 @@ public class PresentCommand implements CommandExecutor {
                 sender.sendMessage("Ta komenda jest tylko dla Graczy");
             }
         }
+        return false;
+    }
+
+    public static boolean containsEnum(String text) {
+
+        for (PresentType type : PresentType.values()) {
+            if (type.name().equals(text)) {
+                return true;
+            }
+        }
+
         return false;
     }
 

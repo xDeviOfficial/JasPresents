@@ -90,7 +90,7 @@ public class Presents extends JavaPlugin {
                    Utils.sendColoredInfo("&cDatabase status = &aON");
                     try {
                         DatabaseConfiguration.checkTable();
-                       // DatabaseConfiguration.loadPresents();
+                        DatabaseConfiguration.loadPresents();
                         startPacketTask();
                     } catch (SQLException e) {
                         e.printStackTrace();
