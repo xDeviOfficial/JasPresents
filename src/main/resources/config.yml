@@ -2,6 +2,7 @@
 # Global Config
 #
 General:
+  world_name: "world"
   Tag: "&e&lJasMC » "
   DebugMode: true
   Database:

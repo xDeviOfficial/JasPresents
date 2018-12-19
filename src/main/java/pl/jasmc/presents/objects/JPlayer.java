@@ -59,14 +59,22 @@ public class JPlayer {
         while(itr.hasNext()) {
             Present currentPresent = (Present)itr.next();
             if(currentPresent.getLocation() != null) {
-                Presents.placeSkull(Bukkit.getPlayer(name), currentPresent.getLocation(), "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvMjc1ZDEzY2ExNGJjYmJkMWNkZTIxYWEwNjYwMDEwMWU0NTZkMzE4YWFkZjE3OGIyNzkzNjc4YjQ5NGY2ZGNlOCJ9fX0=");
+                if(currentPresent.getLocation().getWorld().getName().equalsIgnoreCase(Presents.WORLD_NAME)) {
+                    Presents.placeSkull(Bukkit.getPlayer(name), currentPresent.getLocation(), "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvMjc1ZDEzY2ExNGJjYmJkMWNkZTIxYWEwNjYwMDEwMWU0NTZkMzE4YWFkZjE3OGIyNzkzNjc4YjQ5NGY2ZGNlOCJ9fX0=");
+                }
             }
         }
 
         Iterator itrToFind = getPresentsToFind().iterator();
         while(itrToFind.hasNext()) {
             Present currentPresentToFind = (Present)itrToFind.next();
-            Presents.placeSkull(Bukkit.getPlayer(name), currentPresentToFind.getLocation(), currentPresentToFind.getTextureID());
+            if(currentPresentToFind.getLocation() != null) {
+                if(currentPresentToFind.getLocation().getWorld().getName().equalsIgnoreCase(Presents.WORLD_NAME)) {
+                    Presents.placeSkull(Bukkit.getPlayer(name), currentPresentToFind.getLocation(), currentPresentToFind.getTextureID());
+                }
+
+            }
+
         }
     }
 

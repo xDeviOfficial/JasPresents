@@ -44,7 +44,7 @@ public class PresentInventory {
         for(Present p : jPlayer.getPresentsFound()) {
             i++;
             if(i == 17 || i == 26 || i == 34) i = i+2;
-            inv.setItem(i, Utils.createSkullToInventory(p.getTextureID(), Utils.color(p.getName()), Arrays.asList(Utils.color(" "), Utils.color("&ePrezent numer: &a" + p.getId()), Utils.color("&eNazwa: &a" + p.getName()), "    ", Utils.color("&eStatus: &cZNALEZIONO" ))));
+            inv.setItem(i, Utils.createSkullToInventory(p.getTextureID(), Utils.color(p.getName()), Arrays.asList(Utils.color(" "), Utils.color("&eNazwa: &a" + p.getName()), "    ", Utils.color("&eStatus: &aZNALEZIONO" ))));
         }
         for(Present present : jPlayer.getPresentsToFind()) {
             i++;

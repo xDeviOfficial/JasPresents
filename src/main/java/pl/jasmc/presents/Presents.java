@@ -42,6 +42,7 @@ public class Presents extends JavaPlugin {
 
     public static String TAG;
     public static int COINS_REWARD;
+    public static String WORLD_NAME;
 
     public static Economy getEcon() {
         return econ;
@@ -108,8 +109,7 @@ public class Presents extends JavaPlugin {
         setupEconomy();
         TAG = getConfig().getString("General.Tag");
         COINS_REWARD = getConfig().getInt("Economy.money_on_complete");
-
-
+        WORLD_NAME = getConfig().getString("General.world_name");
 
     }
 
