@@ -156,6 +156,9 @@ public class Presents extends JavaPlugin {
      */
 
     public static void placeSkull(Player p, Location loc, String texture) {
+        if(!loc.getWorld().getName().equalsIgnoreCase(WORLD_NAME)){
+            return;
+        }
         BlockPosition pos = new BlockPosition(loc.getX(), loc.getY(), loc.getZ());
         pos.down();
         
