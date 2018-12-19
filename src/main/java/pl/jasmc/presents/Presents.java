@@ -137,6 +137,7 @@ public class Presents extends JavaPlugin {
             @Override
             public void run() {
                 for(JPlayer player : DataManager.players) {
+
                     player.updatePresents();
                 }
             }
@@ -158,12 +159,15 @@ public class Presents extends JavaPlugin {
     public static void placeSkull(Player p, Location loc, String texture) {
         BlockPosition pos = new BlockPosition(loc.getX(), loc.getY(), loc.getZ());
 
+        pos.down();
+
         GameProfile gameProfile = Utils.getGameProfile(texture);
 
         NBTTagCompound tag = CraftItemStack.asNMSCopy(Utils.createSkull(texture, "test")).getTag();
 
 
         TileEntitySkull skull = new TileEntitySkull();
+
         skull.setRotation(3);
         skull.setSkullType(3);
         skull.setPosition(pos);

@@ -1,6 +1,7 @@
 package pl.jasmc.presents.objects;
 
 import org.bukkit.Bukkit;
+import org.bukkit.entity.Player;
 import pl.jasmc.presents.Presents;
 import pl.jasmc.presents.database.DatabaseConfiguration;
 import pl.jasmc.presents.managers.DataManager;
@@ -52,6 +53,11 @@ public class JPlayer {
 
             }
         }
+    }
+
+    public void tesT(Player p) {
+
+
     }
 
     public void updatePresents() {
