@@ -5,7 +5,9 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import pl.jasmc.presents.Presents;
 import pl.jasmc.presents.database.DatabaseConfiguration;
+import pl.jasmc.presents.enums.PresentType;
 import pl.jasmc.presents.inventory.PresentInventory;
 import pl.jasmc.presents.utils.Utils;
 
@@ -19,7 +21,15 @@ public class PresentCommand implements CommandExecutor {
             if(sender instanceof Player) {
                 Player p = (Player) sender;
                 if(p.hasPermission("jasmc.admin")) {
-                    if(args.length == 3 && args[0].equalsIgnoreCase("dodaj")) {
+                    if(args.length == 0) {
+                        p.sendMessage(Utils.color("&c&lWykryto uprawnienia Administratora"));
+                        p.sendMessage(Utils.color("&d Prezenty &eJasMC"));
+                        p.sendMessage(Utils.color("&eDostepne komendy: "));
+                        p.sendMessage(Utils.color("&d/&eprezent otworz &7- Otwiera GUI z prezentami znalezionymi i nie znalezionymi"));
+                        p.sendMessage(Utils.color("&d/&eprezent dodaj <Nazwa> <Typ> &7- Tworzy nowy prezent i dodaje go do bazy danych"));
+                        p.sendMessage(Utils.color("&d/&eprezent usun  &7- Usuwa prezent na ktory sie patrzysz"));
+                        p.sendMessage(Utils.color("&d/&eprezent typy &7- Wyswietla wszystkie dostepne typy prezentow"));
+                    } else if(args.length == 3 && args[0].equalsIgnoreCase("dodaj")) {
                         String presentName = args[1];
                         String presentType = args[2];
                         String location = Utils.locationToString(p.getTargetBlock(null, 200).getLocation());
@@ -29,11 +39,30 @@ public class PresentCommand implements CommandExecutor {
                         } catch (SQLException e) {
                             e.printStackTrace();
                         }
-                    } else if(args.length == 0) {
+                    } else if(args.length == 1 && args[0].equalsIgnoreCase("otworz")) {
                         PresentInventory.open(p);
+                    } else if(args.length == 1 && args[0].equalsIgnoreCase("typy")) {
+                        p.sendMessage(Utils.color("&eDostepne tryby prezentow:"));
+                        for(PresentType type : PresentType.values()) {
+                            p.sendMessage(Utils.color("&bTyp: " + type.toString()));
+                        }
+                    } else if(args.length == 1 && args[0].equalsIgnoreCase("usun")) {
+                        String location = Utils.locationToString(p.getTargetBlock(null, 200).getLocation());
+                        try {
+                            DatabaseConfiguration.deletePresent(location);
+                            p.sendMessage(Utils.color(Presents.TAG + "&ePomyslnie usuniteto prezent, prosze o przelogowanie!"));
+                        } catch (SQLException e) {
+                            e.printStackTrace();
+                        }
+
                     }
-                } else {
-                    //NO PERMISSION - ADMIN
+                } else if(sender.hasPermission("jasmc.gracz")) {
+                    if(args.length == 0) {
+                        PresentInventory.open(p);
+                    } else {
+                        p.sendMessage(Utils.color(Presents.TAG + "&cPoprawne uzycie: /prezent"));
+                    }
+
                 }
                // ItemStack item = Utils.createSkull("eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvMjc1ZDEzY2ExNGJjYmJkMWNkZTIxYWEwNjYwMDEwMWU0NTZkMzE4YWFkZjE3OGIyNzkzNjc4YjQ5NGY2ZGNlOCJ9fX0=", "test");
                // p.getInventory().addItem(item);

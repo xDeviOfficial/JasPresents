@@ -6,6 +6,7 @@ import pl.jasmc.presents.database.DatabaseConfiguration;
 import pl.jasmc.presents.managers.DataManager;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 public class JPlayer {
@@ -49,28 +50,25 @@ public class JPlayer {
                     e.printStackTrace();
                 }
 
-
             }
         }
     }
 
     public void updatePresents() {
-        for(Present present : getPresentsToFind()) {
-            if(present.getLocation() != null) {
-                Presents.placeSkull(Bukkit.getPlayer(name), present.getLocation(), present.getTextureID());
+        Iterator itr = getPresentsFound().iterator();
+        while(itr.hasNext()) {
+            Present currentPresent = (Present)itr.next();
+            if(currentPresent.getLocation() != null) {
+                Presents.placeSkull(Bukkit.getPlayer(name), currentPresent.getLocation(), "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvMjc1ZDEzY2ExNGJjYmJkMWNkZTIxYWEwNjYwMDEwMWU0NTZkMzE4YWFkZjE3OGIyNzkzNjc4YjQ5NGY2ZGNlOCJ9fX0=");
             }
         }
-        for(Present present : getPresentsFound()) {
-            if(present.getLocation() != null) {
-                Presents.placeSkull(Bukkit.getPlayer(name), present.getLocation(), "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvMjc1ZDEzY2ExNGJjYmJkMWNkZTIxYWEwNjYwMDEwMWU0NTZkMzE4YWFkZjE3OGIyNzkzNjc4YjQ5NGY2ZGNlOCJ9fX0=");
-            }
 
+        Iterator itrToFind = getPresentsToFind().iterator();
+        while(itrToFind.hasNext()) {
+            Present currentPresentToFind = (Present)itrToFind.next();
+            Presents.placeSkull(Bukkit.getPlayer(name), currentPresentToFind.getLocation(), currentPresentToFind.getTextureID());
         }
-
     }
-
-
-
 
 
     public void foundPresent(Present present) {

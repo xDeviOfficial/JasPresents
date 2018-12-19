@@ -2,6 +2,7 @@
 # Global Config
 #
 General:
+  Tag: "&e&lJasMC » "
   DebugMode: true
   Database:
     #If you will turn this off database will turn off and a lot of functions will doesn't work!
@@ -18,3 +19,16 @@ General:
     DatabaseUser: "root"
     #Password for your user, be sure that you have allowed remote connections if database is isn't on localhost
     DatabasePassword: "passwd"
+
+##Economy - Vault
+
+Economy:
+  money_on_complete: 100
+
+Messages:
+  inventory_title: "Prezenty JasMC"
+  found_present: "&eGratulacje, znalazles kolejny prezent {presents_found}/{presents_to_find}"
+  found_all_presents: "&eZnalazles wszystkie prezenty, Gratulacje!"
+  already_found_present: "&aJuz znalazles ten prezent, szukaj dalej..."
+  coins_receive_successfull: "&aW nagrode dostajesz : {coins} monet!"
+  coins_receive_error: "&cWystapil blad podczas dawania monet, zrob screenshota i skontaktuj sie z administratorem."

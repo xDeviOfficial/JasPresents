@@ -139,6 +139,11 @@ public class DatabaseConfiguration {
         stm.executeUpdate(query);
     }
 
+    public static void deletePresent(String location)throws SQLException {
+        String query = "DELETE FROM JasPresents WHERE location=\"" + location + "\"";
+        stm.executeUpdate(query);
+    }
+
     /*
 
         DEBUGOWANIE

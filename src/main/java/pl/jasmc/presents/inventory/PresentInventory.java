@@ -5,6 +5,7 @@ import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
+import pl.jasmc.presents.Presents;
 import pl.jasmc.presents.managers.DataManager;
 import pl.jasmc.presents.objects.JPlayer;
 import pl.jasmc.presents.objects.Present;
@@ -16,7 +17,7 @@ import java.util.Arrays;
 public class PresentInventory {
 
     public static void open(Player player) {
-        Inventory inv = Bukkit.createInventory(null, 54, "Prezenty JasMC");
+        Inventory inv = Bukkit.createInventory(null, 54, Presents.getInstance().getConfig().getString("Messages.inventory_title"));
         int i = 9;
         JPlayer jPlayer = DataManager.getJPlayer(player.getName());
         ItemStack glass = new ItemBuilder(Material.STAINED_GLASS_PANE).setDurability((byte) 10).setName(" ").toItemStack();

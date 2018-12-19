@@ -40,6 +40,9 @@ public class Presents extends JavaPlugin {
     private HikariDataSource hikari;
     private static Economy econ = null;
 
+    public static String TAG;
+    public static int COINS_REWARD;
+
     public static Economy getEcon() {
         return econ;
     }
@@ -63,7 +66,6 @@ public class Presents extends JavaPlugin {
             hikari.addDataSourceProperty("databaseName", this.getConfig().getString("General.Database.DatabaseName"));
             hikari.addDataSourceProperty("user", this.getConfig().getString("General.Database.DatabaseUser"));
             hikari.addDataSourceProperty("password", this.getConfig().getString("General.Database.DatabasePassword"));
-
             try {
                 DatabaseConfiguration.checkTable();
             } catch (SQLException e) {
@@ -104,6 +106,8 @@ public class Presents extends JavaPlugin {
         RandomFireWorks.getManager().addTypes();
         registerPacketIntercepter();
         setupEconomy();
+        TAG = getConfig().getString("General.Tag");
+        COINS_REWARD = getConfig().getInt("Economy.money_on_complete");
 
 
 
