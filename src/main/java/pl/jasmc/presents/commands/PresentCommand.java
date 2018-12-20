@@ -70,19 +70,20 @@ public class PresentCommand implements CommandExecutor {
                         reloadConfig();
                         p.sendMessage(Utils.color(Presents.TAG + "&ePomyslnie przeladowano!"));
                     }
-                } else if(sender.hasPermission("jasmc.gracz")) {
+                } else {
                     if(args.length == 0) {
                         PresentInventory.open(p);
                     } else {
                         p.sendMessage(Utils.color(Presents.TAG + "&cPoprawne uzycie: /prezent"));
                     }
-
                 }
                // ItemStack item = Utils.createSkull("eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvMjc1ZDEzY2ExNGJjYmJkMWNkZTIxYWEwNjYwMDEwMWU0NTZkMzE4YWFkZjE3OGIyNzkzNjc4YjQ5NGY2ZGNlOCJ9fX0=", "test");
                // p.getInventory().addItem(item);
             } else {
                 sender.sendMessage("Ta komenda jest tylko dla Graczy");
             }
+
+
         }
         return false;
     }
