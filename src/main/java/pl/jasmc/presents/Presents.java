@@ -43,6 +43,7 @@ public class Presents extends JavaPlugin {
     public static String TAG;
     public static int COINS_REWARD;
     public static String WORLD_NAME;
+    public static boolean DEBUG_MODE;
 
     public static Economy getEcon() {
         return econ;
@@ -109,7 +110,7 @@ public class Presents extends JavaPlugin {
         TAG = getConfig().getString("General.Tag");
         COINS_REWARD = getConfig().getInt("Economy.money_on_complete");
         WORLD_NAME = getConfig().getString("General.world_name");
-
+        DEBUG_MODE = getConfig().getBoolean("General.DebugMode");
     }
 
     @Override
@@ -136,7 +137,6 @@ public class Presents extends JavaPlugin {
             @Override
             public void run() {
                 for (JPlayer player : DataManager.players) {
-
                     player.updatePresents();
                 }
             }
@@ -176,8 +176,13 @@ public class Presents extends JavaPlugin {
         skull.save(tag);
 
 
+
+
+
         ((CraftPlayer) p).sendBlockChange(loc, Material.SKULL, (byte) 3);
         ((CraftPlayer) p).getHandle().playerConnection.sendPacket(skull.getUpdatePacket());
+
+
     }
 
     private void registerPacketIntercepter() {

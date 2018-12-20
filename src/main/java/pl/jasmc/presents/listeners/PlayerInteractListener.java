@@ -40,7 +40,7 @@ public class PlayerInteractListener implements Listener {
                             RandomFireWorks.getManager().launchRandomFirework(event.getClickedBlock().getLocation());
                             RandomFireWorks.getManager().launchRandomFirework(event.getClickedBlock().getLocation());
                             RandomFireWorks.getManager().launchRandomFirework(event.getClickedBlock().getLocation());
-                            EconomyResponse r = Presents.getEcon().depositPlayer(event.getPlayer(), 100);
+                            EconomyResponse r = Presents.getEcon().depositPlayer(event.getPlayer(), Presents.COINS_REWARD);
                             if(r.transactionSuccess()) {
                                 event.getPlayer().sendMessage(Utils.color(Presents.TAG + Presents.getInstance().getConfig().getString("Messages.coins_receive_successfull").replace("{coins}", String.valueOf(Presents.COINS_REWARD))));
                             } else {

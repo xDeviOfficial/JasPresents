@@ -43,12 +43,12 @@ public class PresentInventory {
 
         for(Present p : jPlayer.getPresentsFound()) {
             i++;
-            if(i == 17 || i == 26 || i == 34) i = i+2;
+            if(i == 17 || i == 26 || i == 35) i = i+2;
             inv.setItem(i, Utils.createSkullToInventory(p.getTextureID(), Utils.color(p.getName()), Arrays.asList(Utils.color(" "), Utils.color("&eNazwa: &a" + p.getName()), "    ", Utils.color("&eStatus: &aZNALEZIONO" ))));
         }
         for(Present present : jPlayer.getPresentsToFind()) {
             i++;
-            if(i == 17 || i == 26 || i == 34) i = i+2;
+            if(i == 17 || i == 26 || i == 35) i = i+2;
             inv.setItem(i, Utils.createSkullToInventory("eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvYmFkYzA0OGE3Y2U3OGY3ZGFkNzJhMDdkYTI3ZDg1YzA5MTY4ODFlNTUyMmVlZWQxZTNkYWYyMTdhMzhjMWEifX19", "?", Arrays.asList("?")));
         }
 

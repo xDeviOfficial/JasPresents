@@ -36,7 +36,10 @@ public class JPlayer {
                 try {
                     Present presentClone = (Present) present.clone();
                     this.presentsFound.add(presentClone);
-                    System.out.println("Dodano: " + presentClone.getName() + " do znalezionych prezentow " + name);
+                    if(Presents.DEBUG_MODE) {
+                        System.out.println("Dodano: " + presentClone.getName() + " do znalezionych prezentow " + name);
+                    }
+
                     return;
                 } catch (CloneNotSupportedException e) {
                     e.printStackTrace();
@@ -45,7 +48,9 @@ public class JPlayer {
                 try {
                     Present presentClone = (Present) present.clone();
                     this.presentsToFind.add(presentClone);
-                    System.out.println("Dodano: " + presentClone.getName() + " do znalezienia dla " + name);
+                    if(Presents.DEBUG_MODE) {
+                        System.out.println("Dodano: " + presentClone.getName() + " do znalezienia dla " + name);
+                    }
                     return;
                 }catch (CloneNotSupportedException e) {
                     e.printStackTrace();

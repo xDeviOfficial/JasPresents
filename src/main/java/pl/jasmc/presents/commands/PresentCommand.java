@@ -31,6 +31,8 @@ public class PresentCommand implements CommandExecutor {
                         p.sendMessage(Utils.color("&d/&eprezent dodaj <Nazwa> <Typ> &7- Tworzy nowy prezent i dodaje go do bazy danych"));
                         p.sendMessage(Utils.color("&d/&eprezent usun  &7- Usuwa prezent na ktory sie patrzysz"));
                         p.sendMessage(Utils.color("&d/&eprezent typy &7- Wyswietla wszystkie dostepne typy prezentow"));
+                        p.sendMessage(Utils.color("&d/&eprezent refresh &7- &c&lResetuje tabelki w MySQL"));
+                        p.sendMessage(Utils.color("&d/&eprezent reload&7- &c&lPrzeladowanie configu"));
                     } else if(args.length == 3 && args[0].equalsIgnoreCase("dodaj")) {
                         String presentName = args[1];
                         String presentType = args[2];
@@ -61,6 +63,9 @@ public class PresentCommand implements CommandExecutor {
                             e.printStackTrace();
                         }
 
+                    } else if(args.length == 1 && args[0].equalsIgnoreCase("refresh")) {
+                        DatabaseConfiguration.purgePresentsTables();
+                        p.sendMessage(Utils.color(Presents.TAG + "&ePomyslnie zresetowano prezenty!"));
                     }
                 } else if(sender.hasPermission("jasmc.gracz")) {
                     if(args.length == 0) {
@@ -80,13 +85,11 @@ public class PresentCommand implements CommandExecutor {
     }
 
     public static boolean containsEnum(String text) {
-
         for (PresentType type : PresentType.values()) {
             if (type.name().equals(text)) {
                 return true;
             }
         }
-
         return false;
     }
 

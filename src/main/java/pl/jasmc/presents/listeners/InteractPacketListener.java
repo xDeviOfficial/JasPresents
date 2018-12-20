@@ -8,6 +8,7 @@ import com.comphenix.protocol.events.PacketEvent;
 import com.comphenix.protocol.wrappers.WrappedBlockData;
 import org.bukkit.Material;
 import org.bukkit.plugin.java.JavaPlugin;
+import pl.jasmc.presents.objects.JPlayer;
 
 public class InteractPacketListener extends PacketAdapter {
 
@@ -31,6 +32,9 @@ public class InteractPacketListener extends PacketAdapter {
                     event.setCancelled(true);
                 }
             }
+
+
         }
+
     }
 }

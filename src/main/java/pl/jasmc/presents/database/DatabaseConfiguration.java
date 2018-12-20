@@ -26,6 +26,26 @@ public class DatabaseConfiguration {
 
     }
 
+    public static void purgePresentsTables(){
+
+        String query1 = "TRUNCATE [TABLE] JasPresents";
+        String query2 = "TRUNCATE [TABLE] JasPresentsUsers";
+        try {
+            stm.executeUpdate(query1);
+            stm.executeUpdate(query2);
+            DataManager.players.clear();
+            if(Presents.DEBUG_MODE) {
+                System.out.print("Zresetowano prezenty.");
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+
+
+    }
+
     /*
         loadPlayer()
         @p = Gracz
