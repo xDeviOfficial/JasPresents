@@ -79,7 +79,10 @@ public class DatabaseConfiguration {
                 int y = rs.getInt("y");
                 int z = rs.getInt("z");
                 player.getPresentsFound().add(new Present(presentName, PresentType.valueOf(presentType.toUpperCase()), new Location(Bukkit.getWorld(world), x,y,z), presentID));
-                System.out.println("Dodano: " + player.getName() + " do znalezionych [" + presentName);
+                if(Presents.DEBUG_MODE) {
+                    System.out.println("Dodano: " + player.getName() + " do znalezionych [" + presentName);
+                }
+
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -102,7 +105,10 @@ public class DatabaseConfiguration {
                         String present_name = rs.getString("present_name");
                         String present_type = rs.getString("present_type");
                         jPlayer.getPresentsToFind().add(new Present(present_name, PresentType.valueOf(present_type.toUpperCase()), Utils.stringToLoc(location), id));
-                        System.out.println("Zaladowano prezent do znalezienia dla gracza: " + jPlayer.getName());
+                        if(Presents.DEBUG_MODE) {
+                            System.out.println("Zaladowano prezent do znalezienia dla gracza: " + jPlayer.getName());
+                        }
+
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -155,7 +161,10 @@ public class DatabaseConfiguration {
 
     public static void addPresent(String location, String name, String type) throws SQLException  {
         String query = "INSERT INTO JasPresents (location, present_name, present_type) VALUES (\"" +  location + "\",\"" + name + "\",\"" + type + "\")";
-        System.out.println("Query: " + query);
+        if(Presents.DEBUG_MODE) {
+            System.out.println("Query: " + query);
+        }
+
         stm.executeUpdate(query);
     }
 
@@ -177,10 +186,15 @@ public class DatabaseConfiguration {
             DataManager.addPresent(present);
             i++;
         }
+        if(Presents.DEBUG_MODE) {
+            System.out.println("Załadowano: " + i + " prezentow");
+        }
 
-        System.out.println("Załadowano: " + i + " prezentow");
         for(Present p : DataManager.loadedPresenents) {
-            System.out.println("Kolor: " + p.getType().name());
+            if(Presents.DEBUG_MODE) {
+                System.out.println("Kolor: " + p.getType().name());
+            }
+
         }
     }
 
