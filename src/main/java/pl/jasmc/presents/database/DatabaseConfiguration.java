@@ -27,12 +27,15 @@ public class DatabaseConfiguration {
     }
 
     public static void purgePresentsTables(){
-
-        String query1 = "TRUNCATE [TABLE] JasPresents";
-        String query2 = "TRUNCATE [TABLE] JasPresentsUsers";
+        String truncate_off = "SET FOREIGN_KEY_CHECKS = 0;";
+        String query1 = "TRUNCATE JasPresents";
+        String query2 = "TRUNCATE JasPresentsUsers";
+        String truncate_on = "SET FOREIGN_KEY_CHECKS = 1;";
         try {
+            stm.executeUpdate(truncate_off);
             stm.executeUpdate(query1);
             stm.executeUpdate(query2);
+            stm.executeUpdate(truncate_on);
             DataManager.players.clear();
             if(Presents.DEBUG_MODE) {
                 System.out.print("Zresetowano prezenty.");

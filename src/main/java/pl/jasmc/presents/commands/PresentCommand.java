@@ -66,6 +66,9 @@ public class PresentCommand implements CommandExecutor {
                     } else if(args.length == 1 && args[0].equalsIgnoreCase("refresh")) {
                         DatabaseConfiguration.purgePresentsTables();
                         p.sendMessage(Utils.color(Presents.TAG + "&ePomyslnie zresetowano prezenty!"));
+                    } else if(args.length == 1 && args[0].equalsIgnoreCase("reload")) {
+                        reloadConfig();
+                        p.sendMessage(Utils.color(Presents.TAG + "&ePomyslnie przeladowano!"));
                     }
                 } else if(sender.hasPermission("jasmc.gracz")) {
                     if(args.length == 0) {
@@ -93,8 +96,12 @@ public class PresentCommand implements CommandExecutor {
         return false;
     }
 
-
-    public void openGui(Player player) {
+    public static void reloadConfig() {
+        Presents.getInstance().reloadConfig();
+        Presents.DEBUG_MODE = Presents.getInstance().getConfig().getBoolean("General.DebugMode");
+        Presents.WORLD_NAME = Presents.getInstance().getConfig().getString("world_name");
+        Presents.TAG = Presents.getInstance().getConfig().getString("General.Tag");
+        Presents.COINS_REWARD = Presents.getInstance().getConfig().getInt("");
 
     }
 }
