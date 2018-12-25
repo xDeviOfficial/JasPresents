@@ -133,7 +133,7 @@ public class Presents extends JavaPlugin {
     }
 
     public void startPacketTask() {
-        Bukkit.getScheduler().runTaskTimerAsynchronously(this, new Runnable() {
+        Bukkit.getScheduler().runTaskTimer(this, new Runnable() {
             @Override
             public void run() {
                 for (JPlayer player : DataManager.players) {
